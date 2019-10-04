@@ -8,7 +8,6 @@ async function save(req, res) {
   } catch (e) {
     res.status(500).send(e);
   }
-
 }
 
 async function index(req,res) {

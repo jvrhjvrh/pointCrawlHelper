@@ -2,8 +2,8 @@ const encountersModel = require('../models/encounters');
 
 async function addEncounter(name, encounters) {
   try{
-  const test = new encountersModel({name, encounters});
-  return test.save()
+  const newEncounter = new encountersModel({name, encounters});
+  return newEncounter.save()
   } catch (e) {
     return e;
   }

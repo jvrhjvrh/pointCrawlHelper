@@ -16,5 +16,8 @@
     "morgan": "~1.9.1",
     "nodemon": "^1.19.1",
     "pug": "^2.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.11"
   }
 }
