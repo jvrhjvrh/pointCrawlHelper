@@ -11,14 +11,15 @@ async function createUser(user) {
 }
 
 async function getUsers() {
-  try{
     return usersModel.find();
-  } catch (e) {
-    return e;
-  }
+}
+
+async function getUserByName(name){
+  return usersModel.findOne({name})
 }
 
 module.exports = {
   createUser,
   getUsers,
+  getUserByName,
 };

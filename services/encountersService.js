@@ -1,41 +1,41 @@
 const encountersModel = require('../models/encounters');
 
-async function addEncounter(name, encounters) {
+async function addEncounter(name, encounters, userId) {
   try{
-  const newEncounter = new encountersModel({name, encounters});
+  const newEncounter = new encountersModel({name, encounters, createdBy: userId});
   return newEncounter.save()
   } catch (e) {
     return e;
   }
 }
 
-async function getEncounters() {
+async function getEncounters(userId) {
   try{
-  return encountersModel.find();
+  return encountersModel.find({createdBy: userId});
   } catch (e) {
     return e;
   }
 }
 
-async function getOneEncounter(objectId) {
+async function getOneEncounter(objectId, userId) {
   try{
-    return encountersModel.findOne({_id:objectId});
+    return encountersModel.findOne({_id:objectId, createdBy: userId});
   } catch (e) {
     return e;
   }
 
 }
 
-async function deleteOne(objectId) {
-  return encountersModel.remove({_id:objectId});
+async function deleteOne(objectId, userId) {
+  return encountersModel.remove({_id:objectId, createdBy: userId});
 }
 
-async function updateOne(objectId, name, encounters) {
-  return encountersModel.updateOne({_id: objectId}, {$set:{name, encounters}});
+async function updateOne(objectId, name, encounters, userId) {
+  return encountersModel.updateOne({_id: objectId, createdBy: userId}, {$set:{name, encounters}});
 }
 
-async function roll(objectId) {
-  const vector = await getOneEncounter(objectId);
+async function roll(objectId, userId) {
+  const vector = await getOneEncounter(objectId, userId);
   const chance = vector.encounters.reduce((acc, encounter) => {return acc + encounter.chance}, 0);
   const randomValue = Math.floor((Math.random() * chance) +1);
   let chanceAcc = 0;
@@ -46,7 +46,7 @@ async function roll(objectId) {
     chanceAcc += vector.encounters[i].chance;
   }
 
-  const results =  description.map(async desc => desc.includes('_id:') ? roll(desc.replace('_id:','')) : desc);
+  const results =  description.map(async desc => desc.includes('_id:') ? roll(desc.replace('_id:',''), userId) : desc);
   const awaitResults = await Promise.all(results);
   return {name: vector.name, results: awaitResults , roll: randomValue};
 }
