@@ -6,7 +6,7 @@ const isAuthenticated = (req, res, next) => {
     const [, token] = bearerHeader.split(' ');
     const verifiedToken = jwt.verify(token, 'minhaChaveSecreta');
     req.verifiedToken = verifiedToken;
-    return next();
+    next();
   } else {
     res.status(403).send({error: "You're not authorized to view this page"});
   }

@@ -5,10 +5,12 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+
 const indexRouter = require('./routes/index');
 const userAuth = require('./middleware/userAuth');
 const usersRouter = require('./routes/users');
 const encountersRouter = require('./routes/encounters');
+const locationsRouter = require('./routes/locations');
 
 const mongoUri = 'mongodb+srv://jvrhjvrh:XbRAp9yuFZvYhjMT@baseteste-ydvx0.mongodb.net/test?retryWrites=true&w=majority';
 const connectConfig = {
@@ -58,6 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/encounters', userAuth.isAuthenticated, encountersRouter);
+app.use('/locations', userAuth.isAuthenticated, locationsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
