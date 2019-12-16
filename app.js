@@ -11,6 +11,7 @@ const userAuth = require('./middleware/userAuth');
 const usersRouter = require('./routes/users');
 const encountersRouter = require('./routes/encounters');
 const locationsRouter = require('./routes/locations');
+//const groupsRouter = require('./routes/groups');
 
 const mongoUri = 'mongodb+srv://jvrhjvrh:XbRAp9yuFZvYhjMT@baseteste-ydvx0.mongodb.net/test?retryWrites=true&w=majority';
 const connectConfig = {
@@ -61,6 +62,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/encounters', userAuth.isAuthenticated, encountersRouter);
 app.use('/locations', userAuth.isAuthenticated, locationsRouter);
+//app.use('/groups', userAuth.isAuthenticated, groupsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
